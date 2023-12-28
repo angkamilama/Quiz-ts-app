@@ -1,4 +1,4 @@
-import { SetStateAction } from "react";
+import { SetStateAction, Dispatch } from "react";
 
 function QuizDescription(props) {
   const { setMatchStart } = props;

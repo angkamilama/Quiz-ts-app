@@ -1,22 +1,30 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { QuizAPI } from "../api/QuizAPI";
 function QuizGame() {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedQuestion, setSelectedQuestion] = useState(0);
   const [displayResult, setDisplayResult] = useState(false);
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
+  const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
+  //error while destructuring
+  const { question, choices, correctAnswer } =
+    QuizAPI.questions[selectedQuestion];
 
-  const { question, choices } = QuizAPI.questions[selectedQuestion];
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
-    setSelectedOption(e.target.value);
-  };
-  const handleQuestionChange = () => {
+  const handleQuestionChange = (): void => {
+    if (selectedOption === correctAnswer) {
+      setCorrectAnswerCount(correctAnswerCount + 1);
+    } else {
+      setIncorrectAnswerCount(incorrectAnswerCount + 1);
+    }
     if (selectedQuestion < QuizAPI.questions.length) {
       setSelectedQuestion(selectedQuestion + 1);
     } else {
       setDisplayResult(true);
     }
   };
+
+  console.log(correctAnswerCount, incorrectAnswerCount);
+
   return (
     <>
       {displayResult ? (
@@ -34,8 +42,10 @@ function QuizGame() {
                     <label>
                       <input
                         type="radio"
-                        value={selectedOption}
-                        onChange={handleChange}
+                        name="answer"
+                        value={choice}
+                        onChange={(e) => setSelectedOption(e.target.value)}
+                        checked={selectedOption === choice}
                       />
                     </label>
                     {choice}
