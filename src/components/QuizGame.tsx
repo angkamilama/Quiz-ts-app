@@ -6,7 +6,7 @@ function QuizGame() {
   const [displayResult, setDisplayResult] = useState(false);
   const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
   const [incorrectAnswerCount, setIncorrectAnswerCount] = useState(0);
-  //error while destructuring
+
   const { question, choices, correctAnswer } =
     QuizAPI.questions[selectedQuestion];
 
@@ -16,7 +16,7 @@ function QuizGame() {
     } else {
       setIncorrectAnswerCount(incorrectAnswerCount + 1);
     }
-    if (selectedQuestion < QuizAPI.questions.length) {
+    if (selectedQuestion < QuizAPI.questions.length - 1) {
       setSelectedQuestion(selectedQuestion + 1);
     } else {
       setDisplayResult(true);
@@ -29,16 +29,21 @@ function QuizGame() {
     <>
       {displayResult ? (
         <div>
-          <p>The result:</p>
+          <div className=" h-1/2 mx-auto my-[10%] p-2  w-8/12 flex flex-col justify-center items-center gap-4">
+            <p>Thank you for participating!</p>
+            <p> Your Result:</p>
+            <p>Total Correct Answer:{correctAnswerCount}</p>
+            <p>Total Incorrect Answer:{incorrectAnswerCount}</p>
+          </div>
         </div>
       ) : (
-        <div>
-          <div>
-            <p>{question}</p>
+        <div className=" mx-auto my-auto p-2 h-5/6 w-10/12 flex-col justify-center items-center">
+          <div className="h-full">
+            <p className=" my-3">{question}</p>
             <div>
               {choices.map((choice) => {
                 return (
-                  <div>
+                  <div className="h-[40px]">
                     <label>
                       <input
                         type="radio"
@@ -54,7 +59,12 @@ function QuizGame() {
               })}
             </div>
           </div>
-          <button onClick={handleQuestionChange}>Next</button>
+          <button
+            className="border border-slate-600 bg-green-200 p-1  rounded-lg hover:bg-green-500"
+            onClick={handleQuestionChange}
+          >
+            Next
+          </button>
         </div>
       )}
     </>

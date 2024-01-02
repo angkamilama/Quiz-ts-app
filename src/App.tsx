@@ -1,4 +1,3 @@
-import { quiz } from "./api/QuizAPI";
 import QuizDescription from "./components/QuizDescription";
 import QuizGame from "./components/QuizGame";
 import { useState } from "react";
